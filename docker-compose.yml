@@ -125,10 +125,16 @@ services:
       test: redis-cli ping
     volumes:
       - "sentry-redis:/data"
+      - "./redis.conf:/etc/redis/redis.conf"
     ulimits:
       nofile:
         soft: 10032
         hard: 10032
+    command:
+      [
+        "redis-server",
+        "/etc/redis/redis.conf",
+      ]
   postgres:
     <<: *restart_policy
     # Using the same postgres version as Sentry dev for consistency purposes
